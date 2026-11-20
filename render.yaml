@@ -1,0 +1,23 @@
+# Render Blueprint: New > Blueprint, point it at this repo. You'll be asked for INSTRUCTOR_PASSWORD.
+services:
+  - type: web
+    name: complements
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    plan: starter          # free instances sleep when idle and have no disk; use at least starter for a class
+    region: singapore      # pick the region closest to your classroom
+    numInstances: 1        # must stay 1: live game state is in memory
+    healthCheckPath: /healthz
+    disk:                  # a persistent disk also makes Render stop the old instance before starting the new one,
+      name: events         # so two servers never write the event log at the same time
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: INSTRUCTOR_PASSWORD
+        sync: false        # prompted on first deploy; at least 12 characters
+      - key: DATA_FILE
+        value: /var/data/events.jsonl
+      - key: ALLOW_FILE_STORE
+        value: "1"
+      - key: TRUST_PROXY
+        value: "1"

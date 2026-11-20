@@ -1,0 +1,10 @@
+{
+  "name": "complements-sim-engine",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --no-warnings --test test/engine.test.ts",
+    "sim": "node --experimental-strip-types --no-warnings sim/strategies.ts",
+    "tune": "node --experimental-strip-types --no-warnings sim/tune.ts"
+  }
+}
